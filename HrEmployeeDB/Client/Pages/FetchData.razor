@@ -1,0 +1,31 @@
+﻿@page "/fetchdata"
+@using HrEmployeeDB.Shared
+@using BlazorTable;
+@inject HttpClient Http
+
+<PageTitle>Employee list</PageTitle>
+
+<h1>Employee List</h1>
+
+
+    <Table TableItem="Employee" Items="employees">
+        <DynamicColumns TableItem="Employee" Sortable="true"/>
+       
+    </Table>
+
+
+@code {
+    private Employee[]? employees;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            employees = await Http.GetFromJsonAsync<Employee[]>("Employee");
+        }
+        catch ( Exception ex)
+        {
+            
+        }
+    }
+}
